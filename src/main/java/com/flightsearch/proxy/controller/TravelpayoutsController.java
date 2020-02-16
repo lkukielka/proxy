@@ -2,7 +2,7 @@ package com.flightsearch.proxy.controller;
 
 import com.flightsearch.proxy.model.Flight;
 import com.flightsearch.proxy.model.TravelpayoutsResponse;
-import com.flightsearch.proxy.service.TravelpayoutsConnector;
+import com.flightsearch.proxy.service.TravelpayoutsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -12,15 +12,23 @@ import java.util.Map;
 
 @Controller
 public class TravelpayoutsController {
-    private final TravelpayoutsConnector travelpayoutsConnector;
+    private final TravelpayoutsService travelpayoutsConnector;
 
-    public TravelpayoutsController(TravelpayoutsConnector travelpayoutsConnector) {
+    public TravelpayoutsController(TravelpayoutsService travelpayoutsConnector) {
         this.travelpayoutsConnector = travelpayoutsConnector;
     }
 
     @GetMapping("/flights")
     @ResponseBody
     public TravelpayoutsResponse getFlights(@RequestParam(required = false, defaultValue = "-") String destination,
+                                            @RequestParam String departureDate,
+                                            @RequestParam String returnDate) {
+        return this.travelpayoutsConnector.getFlightsFromGdansk(destination, departureDate, returnDate);
+    }
+
+    @GetMapping("/cheapestFlights")
+    @ResponseBody
+    public Map<String, Flight>  getCheapestFlights(@RequestParam(required = false, defaultValue = "-") String destination,
                                             @RequestParam String departureDate,
                                             @RequestParam String returnDate) {
         return this.travelpayoutsConnector.getCheapestFlightsFromGdansk(destination, departureDate, returnDate);

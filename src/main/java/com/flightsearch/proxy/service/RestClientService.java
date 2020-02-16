@@ -11,7 +11,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
 @Service
-public class RestClient {
+public class RestClientService {
     private ObjectMapper mapper = new ObjectMapper()
             .registerModule(new JavaTimeModule());
 

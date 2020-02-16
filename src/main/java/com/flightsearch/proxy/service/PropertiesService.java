@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 @Getter
 @Service
-public class Properties {
+public class PropertiesService {
     @Value("${travelpayouts.api.url}")
     private String travelpayoutsUrl;
     @Value("${version}")

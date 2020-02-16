@@ -12,10 +12,10 @@ import java.util.stream.Collectors;
 import static java.util.Arrays.asList;
 
 @Service
-public class AirportIata {
+public class AirportIataService {
     public static Map<String, String> iatas;
 
-    public AirportIata() {
+    public AirportIataService() {
         ObjectMapper mapper = new ObjectMapper();
         Airport[] airports = Try.of(() -> mapper.readValue(
                 new File(getClass().getClassLoader().getResource("iata-codes.json").getFile()), Airport[].class

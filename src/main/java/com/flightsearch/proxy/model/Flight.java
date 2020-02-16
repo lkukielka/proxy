@@ -11,11 +11,16 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-public class Flight {
+public class Flight implements Comparable<Flight> {
     private BigDecimal price;
     private String airline;
     private String flightNumber;
     private LocalDateTime departureAt;
     private LocalDateTime returnAt;
     private LocalDateTime expiresAt;
+
+    @Override
+    public int compareTo(Flight flight) {
+        return this.getPrice().compareTo(flight.getPrice());
+    }
 }
