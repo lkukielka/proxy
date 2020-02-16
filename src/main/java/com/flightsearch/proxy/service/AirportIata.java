@@ -3,15 +3,9 @@ package com.flightsearch.proxy.service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.flightsearch.proxy.model.Airport;
 import io.vavr.control.Try;
-import lombok.Getter;
-import lombok.Setter;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 

@@ -1,17 +1,12 @@
 package com.flightsearch.proxy.service;
 
-import com.fasterxml.jackson.databind.DeserializationConfig;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.flightsearch.proxy.model.Flight;
 import com.flightsearch.proxy.model.TravelpayoutsResponse;
 import io.vavr.control.Try;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Service
 public class TravelpayoutsConnector {
