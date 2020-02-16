@@ -14,8 +14,11 @@ import java.util.Map;
 
 @Controller
 public class TravelpayoutsController {
-    @Autowired
-    private TravelpayoutsConnector travelpayoutsConnector;
+    private final TravelpayoutsConnector travelpayoutsConnector;
+
+    public TravelpayoutsController(TravelpayoutsConnector travelpayoutsConnector) {
+        this.travelpayoutsConnector = travelpayoutsConnector;
+    }
 
     @GetMapping("/flights")
     @ResponseBody

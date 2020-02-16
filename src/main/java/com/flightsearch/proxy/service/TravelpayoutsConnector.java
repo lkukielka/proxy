@@ -15,12 +15,15 @@ import java.util.stream.Collectors;
 
 @Service
 public class TravelpayoutsConnector {
-    @Autowired
-    private Properties properties;
-    @Autowired
-    private RestClient restClient;
-    @Autowired
-    private AirportIata airportIata;
+    private final Properties properties;
+    private final RestClient restClient;
+    private final AirportIata airportIata;
+
+    public TravelpayoutsConnector(AirportIata airportIata, RestClient restClient, Properties properties) {
+        this.airportIata = airportIata;
+        this.properties = properties;
+        this.restClient = restClient;
+    }
 
     public TravelpayoutsResponse getCheapestFlightsFromGdansk(String destination, String departDate, String returnDate) {
         return Try.of(() ->this.restClient.get(this.properties.getTravelpayoutsUrl()

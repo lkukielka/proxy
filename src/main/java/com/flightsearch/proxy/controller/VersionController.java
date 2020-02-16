@@ -20,9 +20,12 @@ import static java.util.Arrays.asList;
 
 @Controller
 public class VersionController {
-    @Autowired
     private Properties properties;
     public static Map<String, String> iatas;
+
+    public VersionController(Properties properties) {
+        this.properties = properties;
+    }
 
     @GetMapping("/version")
     @ResponseBody
