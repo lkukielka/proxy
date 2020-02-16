@@ -44,7 +44,9 @@ public class TravelpayoutsService {
         Map<String, Flight> cheapestFlights = new HashMap<>();
         allFlightsSorted.entrySet()
                 .forEach(entry -> cheapestFlights.put(entry.getKey(), (Flight)entry.getValue().values().toArray()[0]));
-        return cheapestFlights;
+        return cheapestFlights.entrySet().stream()
+                .sorted(comparingByValue()).collect(Collectors
+                        .toMap(Map.Entry::getKey, Map.Entry::getValue, (v1, v2) -> v1, LinkedHashMap::new));
     }
 
     public  Map<String, Map<String, Flight>> getCheapestFlightFromGdanskWithAirports(String destination, String departDate, String returnDate) {
