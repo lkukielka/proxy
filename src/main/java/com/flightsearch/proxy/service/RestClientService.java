@@ -12,7 +12,7 @@ import java.net.http.HttpResponse;
 
 @Service
 public class RestClientService {
-    private ObjectMapper mapper = new ObjectMapper()
+    private final ObjectMapper mapper = new ObjectMapper()
             .registerModule(new JavaTimeModule());
 
     private final HttpClient httpClient = HttpClient.newBuilder()

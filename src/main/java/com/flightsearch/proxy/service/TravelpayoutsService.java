@@ -3,6 +3,7 @@ package com.flightsearch.proxy.service;
 import com.flightsearch.proxy.model.Flight;
 import com.flightsearch.proxy.model.TravelpayoutsResponse;
 import io.vavr.control.Try;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -18,6 +19,7 @@ public class TravelpayoutsService {
     private final RestClientService restClient;
     private final AirportIataService airportIata;
 
+    @Autowired
     public TravelpayoutsService(AirportIataService airportIata, RestClientService restClient, PropertiesService properties) {
         this.airportIata = airportIata;
         this.properties = properties;
@@ -41,9 +43,8 @@ public class TravelpayoutsService {
                         e -> e.getValue().entrySet().stream()
                             .sorted(comparingByValue())
                             .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (v1, v2) -> v1, LinkedHashMap::new))));
-        Map<String, Flight> cheapestFlights = new HashMap<>();
-        allFlightsSorted.entrySet()
-                .forEach(entry -> cheapestFlights.put(entry.getKey(), (Flight)entry.getValue().values().toArray()[0]));
+        Map<String, Flight> cheapestFlights = allFlightsSorted.entrySet().stream().map(entry -> Map.entry(entry.getKey(), entry.getValue().values().toArray()[0]))
+                .collect(Collectors.toMap(entry -> entry.getKey(), entry -> (Flight) entry.getValue()));
         return cheapestFlights.entrySet().stream()
                 .sorted(comparingByValue()).collect(Collectors
                         .toMap(Map.Entry::getKey, Map.Entry::getValue, (v1, v2) -> v1, LinkedHashMap::new));
