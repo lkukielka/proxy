@@ -39,7 +39,7 @@ public class TravelpayoutsController {
         return this.travelpayoutsConnector.getCheapestFlightsFromGdansk(destination, departureDate, returnDate);
     }
 
-    @GetMapping("/airports")
+    @GetMapping("/names")
     @ResponseBody
     public Map<String, Map<String, Flight>> getFlightsWithAirports(@RequestParam(required = false, defaultValue = "-") String destination,
                                                        @RequestParam String departureDate,

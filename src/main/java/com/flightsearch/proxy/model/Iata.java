@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Airport {
+public class Iata {
     private String code;
     private String name;
 }

@@ -17,11 +17,11 @@ import static java.util.Map.Entry.comparingByValue;
 public class TravelpayoutsService {
     private final PropertiesService properties;
     private final RestClientService restClient;
-    private final AirportIataService airportIata;
+    private final IataService iataService;
 
     @Autowired
-    public TravelpayoutsService(AirportIataService airportIata, RestClientService restClient, PropertiesService properties) {
-        this.airportIata = airportIata;
+    public TravelpayoutsService(IataService airportIata, RestClientService restClient, PropertiesService properties) {
+        this.iataService = airportIata;
         this.properties = properties;
         this.restClient = restClient;
     }
@@ -37,7 +37,7 @@ public class TravelpayoutsService {
 
     public Map<String, Flight> getCheapestFlightsFromGdansk(String destination, String departDate, String returnDate) {
         Map<String, Map<String, Flight>> allFlightsWithNames =
-                this.retrieveAirportNames(this.getFlightsFromGdansk(destination, departDate, returnDate));
+                this.retrieveNames(this.getFlightsFromGdansk(destination, departDate, returnDate));
         Map<String, Map<String, Flight>> allFlightsSorted = allFlightsWithNames.entrySet().stream()
                 .collect(Collectors.toMap(Map.Entry::getKey,
                         e -> e.getValue().entrySet().stream()
@@ -51,13 +51,16 @@ public class TravelpayoutsService {
     }
 
     public  Map<String, Map<String, Flight>> getCheapestFlightFromGdanskWithAirports(String destination, String departDate, String returnDate) {
-        return this.retrieveAirportNames(this.getFlightsFromGdansk(destination, departDate, returnDate));
+        return this.retrieveNames(this.getFlightsFromGdansk(destination, departDate, returnDate));
     }
 
-    private Map<String, Map<String, Flight>> retrieveAirportNames(TravelpayoutsResponse response) {
+    private Map<String, Map<String, Flight>> retrieveNames(TravelpayoutsResponse response) {
         Map<String, Map<String, Flight>> names = new HashMap<>();
         response.getData().entrySet().forEach(entry -> {
-            names.put(this.airportIata.iatas.get(entry.getKey()), entry.getValue());
+            names.put(this.iataService.getCities().get(entry.getKey()),
+                    entry.getValue().entrySet().stream()
+                            .map(innerEntry -> Map.entry(innerEntry.getKey(), innerEntry.getValue().setAirline(this.iataService.getAirlines().get(innerEntry.getValue().getAirline()))))
+                                .collect(Collectors.toMap(e -> e.getKey(), e -> e.getValue())));
         });
         return names;
     }
