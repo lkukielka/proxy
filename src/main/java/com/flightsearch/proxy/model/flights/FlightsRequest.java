@@ -1,11 +1,11 @@
 package com.flightsearch.proxy.model.flights;
 
-import java.time.LocalDateTime;
-import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.Date;
 
 @Getter
 @Setter
@@ -18,4 +18,13 @@ public class FlightsRequest {
 	private Date returnDate;
 	private long minDuration;
 	private long maxDuration;
+
+	public FlightsRequest(FlightsSearchCriteria criteria) {
+		this.origin = criteria.getOrigin();
+		this.destination = criteria.getDestination();
+		this.startDate = criteria.getStartDate();
+		this.returnDate = criteria.getReturnDate();
+		this.minDuration = criteria.getMinDuration();
+		this.maxDuration = criteria.getMaxDuration();
+	}
 }
