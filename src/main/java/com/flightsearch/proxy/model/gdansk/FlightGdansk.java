@@ -1,4 +1,4 @@
-package com.flightsearch.proxy.model;
+package com.flightsearch.proxy.model.gdansk;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Setter
 @Accessors(chain = true)
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-public class Flight implements Comparable<Flight> {
+public class FlightGdansk implements Comparable<FlightGdansk> {
     private BigDecimal price;
     private String airline;
     private String flightNumber;
@@ -22,7 +22,7 @@ public class Flight implements Comparable<Flight> {
     private LocalDateTime expiresAt;
 
     @Override
-    public int compareTo(Flight flight) {
+    public int compareTo(FlightGdansk flight) {
         return this.getPrice().compareTo(flight.getPrice());
     }
 }
